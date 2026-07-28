@@ -1,0 +1,61 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (k == 1 || !head) return head;
+
+        // Dummy node to handle edge cases easily
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        
+        ListNode* groupPrev = dummy;
+
+        while (true) {
+            // Step 1: Check if there are at least k nodes remaining
+            ListNode* kth = getKth(groupPrev, k);
+            if (!kth) break; // Not enough nodes left
+
+            ListNode* groupNext = kth->next;
+
+            // Step 2: Reverse the current group
+            // The group starts at groupPrev->next and ends at kth
+            ListNode* prev = kth->next; // The node after the group
+            ListNode* curr = groupPrev->next;
+
+            while (curr != groupNext) {
+                ListNode* temp = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = temp;
+            }
+
+            // Step 3: Connect the previous part to the new head of the reversed group
+            ListNode* temp = groupPrev->next;
+            groupPrev->next = kth;
+            groupPrev = temp; // Move groupPrev to the end of the reversed group for the next iteration
+        }
+
+        ListNode* result = dummy->next;
+        delete dummy;
+        return result;
+    }
+
+private:
+    // Helper function to get the kth node from the current node
+    ListNode* getKth(ListNode* curr, int k) {
+        while (curr && k > 0) {
+            curr = curr->next;
+            k--;
+        }
+        return curr;
+    }
+};
