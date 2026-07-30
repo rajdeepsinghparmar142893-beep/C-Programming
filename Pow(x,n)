@@ -1,0 +1,33 @@
+//https://leetcode.com/problems/powx-n/
+class Solution {
+public:
+    double myPow(double x, int n) {
+        // Handle the case where x is 0. 
+        // Constraints say either x != 0 or n > 0, so if x=0, result is 0.
+        if (x == 0.0) return 0.0;
+        
+        // Use long long to handle INT_MIN case safely when negating
+        long long N = n;
+        double ans = 1.0;
+        
+        // If n is negative, invert x and make n positive
+        if (N < 0) {
+            x = 1.0 / x;
+            N = -N;
+        }
+        
+        // Binary Exponentiation
+        while (N > 0) {
+            // If N is odd, multiply the current x to the answer
+            if (N % 2 == 1) {
+                ans *= x;
+            }
+            // Square x for the next bit
+            x *= x;
+            // Move to the next bit
+            N /= 2;
+        }
+        
+        return ans;
+    }
+};
