@@ -22,7 +22,7 @@ class Linkedlist{
         head=Newnode;
         cout<<"Inserted Node Successfully at the beginning \n";
     }
-
+/*
 void count(){
   Node* temp=head;
   int Value=0;
@@ -86,6 +86,72 @@ void Addition(){
     }
     cout<<"Sum of All Data in the List is: "<<sum<<endl;
 }
+void Multipy(){
+    Node* temp=head;
+    int sum=1;
+    while(temp!=NULL){
+        sum*=temp->Data;
+        temp=temp->next;
+    }
+    cout<<"Multiplication of All Data in the List is: "<<sum<<endl;
+}
+void Update_value(int Old_Val,int New_Val){
+    Node* temp=head;
+    
+    while(temp!=NULL){
+        if(temp->Data==Old_Val){
+            temp->Data=New_Val;
+        }
+        temp=temp->next;
+    }
+    cout<<"pls enter Valid Old-Value!!"<<endl;
+}
+ void Update_Va(int Value,int pos){
+     Node* temp=head;
+     int COunter=0;
+     while(COunter!=0 and temp!=NULL){
+        temp=temp->next;
+        COunter++;
+     }
+     if(temp==NULL)
+        cout<<"Cannot update the Value at Mentioned Position!!\n";
+     else
+          temp->Data=Value;
+     
+    }  */
+    void Insertinbet(int val,int pos){
+        Node* newnode=new Node(val);
+
+        if(pos<=1 || head==NULL){
+            newnode->next=head;
+            head=newnode;
+            cout<<"Inserted Node Successfully at the beginning\n";
+            return;
+        }
+        Node* temp=head;
+        int counter=1;
+        while(temp!=NULL && counter<pos-1){
+            temp=temp->next;
+            counter++;
+        }
+        if(temp==NULL){
+            Node* last=head;
+            while(last->next!=NULL){
+                last=last->next;
+            }
+            last->next=newnode;
+        }
+        else{
+            newnode->next=temp->next;
+            temp->next=newnode;
+        }
+
+        cout<<"Inserted Node Successfully at position "<<pos<<"\n";
+    }
+
+   void deleteNode(){
+        
+    }
 void Display(){
     Node* temp=head;
     if(head==NULL){
@@ -110,18 +176,8 @@ int main(){
         list.insert_at_beggining(Value);
         list.Display();
     }
-    list.count();
-    list.CountEven();
-    list.CountOdd();
-    list.Addition();
-    
-    int key;
-    cout<<"Enter a value to search in the linked list: ";
-    cin>>key;
-    
-    list.Search(key);
-    list.CountSearchkey(key);
-
+    list.Insertinbet(100,5);
+    list.Display();
     //list.insert_at_beggining(n);
     system("pause");
     return 0;
